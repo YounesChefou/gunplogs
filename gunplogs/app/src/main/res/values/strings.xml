@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">gunplogs</string>
+    <string name="rechercher_kit">Rechercher un kit</string>
+    <string name="label_recherche">Entrer le nom d\'un kit</string>
+    <string name="all_kits">Tous les kits</string>
+    <string name="collection">Collection</string>
+    <string name="wishlist">Wishlist</string>
+    <string name="add_collection">Ajouter le kit à la collection</string>
+    <string name="add_wishlist">Ajouter le kit %1$s à la wishlist</string>
 </resources>
