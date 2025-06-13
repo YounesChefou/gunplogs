@@ -20,7 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.gunplogs.R
-import com.example.gunplogs.data.GunplogDatabase
+import com.example.gunplogs.data.OldGunplogDatabase
 import com.example.gunplogs.model.Kit
 import com.example.gunplogs.ui.theme.GunplogsTheme
 
@@ -43,7 +43,7 @@ fun GunplogCard(
     )
     {
         Text(
-            text = GunplogDatabase().printKit(kit),
+            text = OldGunplogDatabase().printKit(kit),
             modifier = Modifier
                 .padding(8.dp)
         )
@@ -72,7 +72,7 @@ fun GunplogCard(
 @Preview
 @Composable
 fun GunplaCardPreview() {
-    var kit = GunplogDatabase().getKit(0)
+    var kit = OldGunplogDatabase().getKit(0)
     GunplogsTheme {
         GunplogCard(
             kit = kit,

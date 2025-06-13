@@ -1,12 +1,9 @@
 package com.example.gunplogs.data
 
-import androidx.compose.ui.platform.LocalContext
-import androidx.core.content.ContextCompat.getString
-import com.example.gunplogs.R
 import com.example.gunplogs.model.Kit
 import kotlin.collections.mutableListOf
 
-class GunplogDatabase {
+class OldGunplogDatabase {
 
     private val kits = listOf<Kit>(
         Kit(
@@ -14,28 +11,32 @@ class GunplogDatabase {
             name = "RG 1/144 UNICORN GUNDAM 03 PHENEX (NARRATIVE Ver.)",
             series = "narrative",
             scale = "rg-c",
-            manufacturer = "bandai"
+            manufacturer = "bandai",
+            date = "2025.Jun.01"
         ),
         Kit(
             uid = 2,
             name = "RG 1/144 CROSSBONE GUNDAM X2",
             series = "crossbone",
             scale = "rg-c",
-            manufacturer = "bandai"
+            manufacturer = "bandai",
+            date = "2025.Jun.01"
         ),
         Kit(
             uid = 3,
             name = "HG 1/144 Death Army",
             series = "ggundam",
             scale = "hg",
-            manufacturer = "bandai"
+            manufacturer = "bandai",
+            date = "2025.Jun.01"
         ),
         Kit(
             uid = 4,
             name = "MG 1/100 SINANJU (ANIME COLOR Ver.)",
             series = "unicorn",
             scale = "mg",
-            manufacturer = "bandai"
+            manufacturer = "bandai",
+            date = "2025.Jun.01"
         )
     )
 

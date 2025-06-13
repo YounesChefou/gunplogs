@@ -17,3 +17,12 @@ chercher tous les kits existants.
  * TODO: changer la manière dont est gérée les différentes catégories, utiliser un Id au lieu de
  mettre des conditions sur des strings écrites en dur,
  * TODO: integrer une vraie database au lieu d'une List
+ 
+## v0.2.1 :
+ * Ajout d'une database crée à partir du fichier base_gunplog.json
+ * TODO: Retablir les fonctions permettant de changer de catégorie
+ * TODO: Retablir les fonctions permettant l'ajout des kits à la Collection ou Wishlist
+ * TODO: Ajouter les routines permettant de changer les icones quand on appuie dessus
+ * TODO: changer la manière dont est gérée les différentes catégories, utiliser un Id au lieu de
+ mettre des conditions sur des strings écrites en dur,
+ * TODO: Ajout des tests unitaires sur la database
