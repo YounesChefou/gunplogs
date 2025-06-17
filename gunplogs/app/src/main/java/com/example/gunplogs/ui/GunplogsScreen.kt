@@ -38,6 +38,8 @@ fun GunplogsScreen(
     val listKits = flowKits.collectAsState(initial = emptyList()).value
     val category = uiState.value.category
 
+    println("Gunplogs Screen")
+
     Scaffold(
         modifier = Modifier
             .fillMaxSize(),
@@ -65,11 +67,14 @@ fun GunplogsScreen(
                 )
             }
             item {
+                println("MENU BAR")
                 GunplogMenuBar(
-                    onCategoryChange = { viewModel.changeCategory(it) }
+                    onCategoryChange = { viewModel.changeCategory(it) },
+                    currentCategory = category
                 )
             }
             items (listKits) { kit ->
+                    println("GUNPLOG CARD")
                     GunplogCard(
                         kit = kit,
                         addCollectionClicked = { viewModel.addKitToUserCollection(kit) },

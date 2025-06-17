@@ -20,9 +20,16 @@ chercher tous les kits existants.
  
 ## v0.2.1 :
  * Ajout d'une database crée à partir du fichier base_gunplog.json
- * TODO: Retablir les fonctions permettant de changer de catégorie
- * TODO: Retablir les fonctions permettant l'ajout des kits à la Collection ou Wishlist
- * TODO: Ajouter les routines permettant de changer les icones quand on appuie dessus
+ * TODO: Retablir les fonctions permettant de changer de catégorie => le faire à partir d'une requête dans le DAO
+ * TODO: Retablir les fonctions permettant l'ajout des kits à la Collection ou Wishlist => FAIT, il faut le tester
+ * TODO: Ajouter les routines permettant de changer les icones quand on appuie dessus 
  * TODO: changer la manière dont est gérée les différentes catégories, utiliser un Id au lieu de
  mettre des conditions sur des strings écrites en dur,
+ * TODO: Ajout des tests unitaires sur la database
+ 
+## v0.2.2 :
+ * Changement de catégorie à nouveau possible
+ * Ajout des kits dans la Collection et Wishlist
+ * TODO: Ajouter les routines permettant de changer les icones quand on appuie dessus => ne fonctionne pas, continuer à chercher
+ * TODO: quand on clique sur une carte, afficher une page complète avec le kit
  * TODO: Ajout des tests unitaires sur la database

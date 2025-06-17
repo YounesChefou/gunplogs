@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
@@ -53,14 +55,14 @@ fun GunplogCard(
         ){
             IconButton(onClick = addCollectionClicked) {
                 Icon(
-                    imageVector = Icons.Default.AddCircle,
+                    imageVector = if (kit.IsInCollection) Icons.Default.CheckCircle else Icons.Default.AddCircle,
                     contentDescription = stringResource(R.string.add_collection),
                     tint = MaterialTheme.colorScheme.primary,
                 )
             }
             IconButton(onClick = addWishlistClicked) {
                 Icon(
-                    imageVector = Icons.Default.FavoriteBorder,
+                    imageVector = if (kit.IsInWishlist) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                     contentDescription = stringResource(R.string.add_wishlist, kit.name),
                     tint = MaterialTheme.colorScheme.primary,
                 )
@@ -71,8 +73,37 @@ fun GunplogCard(
 
 @Preview
 @Composable
-fun GunplaCardPreview() {
+fun GunplaCardPreview1() {
     var kit = OldGunplogDatabase().getKit(0)
+    GunplogsTheme {
+        GunplogCard(
+            kit = kit,
+            addCollectionClicked = {},
+            addWishlistClicked = {}
+        )
+    }
+}
+
+@Preview
+@Composable
+fun GunplaCardPreview2() {
+    var kit = OldGunplogDatabase().getKit(0)
+    kit.IsInCollection = true
+    kit.IsInWishlist = true
+    GunplogsTheme {
+        GunplogCard(
+            kit = kit,
+            addCollectionClicked = {},
+            addWishlistClicked = {}
+        )
+    }
+}
+
+@Preview
+@Composable
+fun GunplaCardPreview3() {
+    var kit = OldGunplogDatabase().getKit(0)
+    kit.IsInWishlist = true
     GunplogsTheme {
         GunplogCard(
             kit = kit,

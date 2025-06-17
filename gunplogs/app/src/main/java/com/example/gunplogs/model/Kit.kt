@@ -12,6 +12,6 @@ data class Kit(
     val manufacturer : String,
     val date : String,
     val ean : String = "4573102591692", // TODO(), améliorez le script du JSON pour recuperer les EAN
-    val IsInCollection : Boolean = false,
-    val IsInWishlist : Boolean = false,
+    var IsInCollection : Boolean = false,
+    var IsInWishlist : Boolean = false,
 )
