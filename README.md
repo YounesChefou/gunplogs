@@ -33,3 +33,9 @@ chercher tous les kits existants.
  * TODO: Ajouter les routines permettant de changer les icones quand on appuie dessus => ne fonctionne pas, continuer à chercher
  * TODO: quand on clique sur une carte, afficher une page complète avec le kit
  * TODO: Ajout des tests unitaires sur la database
+ 
+## v0.2.2.1
+ * Cliquer sur une carte affiche une page complète avec le kit avec bouton pour revenir à l'écran principal
+ * TODO: Ajouter les routines permettant de changer les icones quand on appuie dessus => ne fonctionne toujours pas, même sur les pages individuelles
+ * TODO: Ajout des tests unitaires sur la database
+ * TODO: Refaire le script JSON avec la base de données car de nombreuses données sont fausses

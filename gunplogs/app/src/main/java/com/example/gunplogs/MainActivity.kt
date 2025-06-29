@@ -7,7 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.gunplogs.ui.GunplogViewModel
-import com.example.gunplogs.ui.GunplogsScreen
+import com.example.gunplogs.ui.GunplogsMainScreen
 import com.example.gunplogs.ui.theme.GunplogsTheme
 
 
@@ -17,7 +17,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             GunplogsTheme {
-                GunplogsScreen(viewModel = GunplogViewModel(this.applicationContext))
+                GunplogsApp(viewModel = GunplogViewModel(this.applicationContext))
             }
         }
     }
@@ -27,6 +27,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun GreetingPreview() {
     GunplogsTheme {
-        GunplogsScreen()
+        GunplogsApp()
     }
 }

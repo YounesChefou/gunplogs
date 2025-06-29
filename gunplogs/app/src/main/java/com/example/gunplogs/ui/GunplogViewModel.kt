@@ -7,27 +7,33 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import com.example.gunplogs.data.GunplogAppDatabase
 import com.example.gunplogs.data.LocalKitsRepository
+import com.example.gunplogs.data.OldGunplogDatabase
 import com.example.gunplogs.model.Category
 import com.example.gunplogs.model.Kit
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.toCollection
 import kotlinx.coroutines.launch
 
 data class GunplogsUiState(
     val kits : Flow<List<Kit>>,
     val searchValue : String,
-    val category: Category = Category.ALL
+    val category: Category = Category.ALL,
+    val uiChange : Boolean = false,
 )
 
 class GunplogViewModel(var context : Context) : ViewModel() {
     private var repository : LocalKitsRepository = LocalKitsRepository(GunplogAppDatabase.getDatabase(context).kitDao())
     private var kitsInDatabase = repository.getAllKitsStream()
     private var currentCategory = Category.ALL
+    private var currentChange = false
     private val _uiState : MutableStateFlow<GunplogsUiState> =
         MutableStateFlow(
             GunplogsUiState(
@@ -74,52 +80,44 @@ class GunplogViewModel(var context : Context) : ViewModel() {
 
     // Adds the kit to the collection
     fun addKitToUserCollection(kit : Kit) {
+        kit.IsInCollection = !kit.IsInCollection
+
         viewModelScope.launch(Dispatchers.IO) {
-            kit.IsInCollection = !kit.IsInCollection
             repository.updateKit(kit)
 
-            kitsInDatabase.map {
-                    listKits -> listKits.map {newKit ->
-                if (newKit.uid == kit.uid) {
-                    newKit.copy(IsInWishlist = kit.IsInCollection)
-                }
-                else {
-                    newKit
-                }
-            }
-            }
+
+            println("Before map : Kit name : " + kit.name + "kit uid : " + kit.uid + " InCollection ? " + kit.IsInCollection)
 
             _uiState.value = _uiState.value.copy(
-                kits = kitsInDatabase,
+                kits =
+                    kitsInDatabase.map { listKits ->
+                        listKits.map { oldKit ->
+                            if (oldKit.uid == kit.uid)
+                                oldKit.copy(IsInCollection = kit.IsInCollection)
+                            else oldKit
+                        }
+                    },
+                uiChange = !currentChange
             )
-
-            //changeCategory(_uiState.value.category) // reload the list at each change ?
         }
     }
-
     // Adds the kit to the wishlist
     fun addKitToUserWishlist(kit : Kit) {
+        kit.IsInWishlist = !kit.IsInWishlist
+
         viewModelScope.launch(Dispatchers.IO) {
-            kit.IsInWishlist = !kit.IsInWishlist
             repository.updateKit(kit)
-
-            kitsInDatabase.map {
-                listKits -> listKits.map {newKit ->
-                    if (newKit.uid == kit.uid) {
-                        newKit.copy(IsInWishlist = kit.IsInWishlist)
-                    }
-                    else {
-                        newKit
-                    }
-                }
-            }
-
-            _uiState.value = _uiState.value.copy(
-                kits = kitsInDatabase,
-            )
-
-            //changeCategory(_uiState.value.category) // reload the list at each change ?
         }
+        _uiState.value = _uiState.value.copy(
+            kits =
+                kitsInDatabase.map { listKits ->
+                    listKits.map { oldKit -> if (oldKit.uid == kit.uid) oldKit.copy(IsInWishlist = kit.IsInWishlist) else oldKit }
+                },
+            uiChange = !currentChange
+        )
     }
 
+    fun loadKit(uid : Int?) : Kit {
+        return repository.getKitStream(uid)
+    }
 }

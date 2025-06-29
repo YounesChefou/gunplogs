@@ -1,5 +1,6 @@
 package com.example.gunplogs.ui
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -31,6 +32,7 @@ fun GunplogCard(
     kit : Kit,
     addCollectionClicked : () -> Unit,
     addWishlistClicked : () -> Unit,
+    showInfoPage : (Int) -> Unit
 ){
     ElevatedCard (
         elevation = CardDefaults.cardElevation(
@@ -40,7 +42,10 @@ fun GunplogCard(
             containerColor = Color(0xFFCCC2DC)
         ),
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .clickable(
+                onClick = { showInfoPage(kit.uid) }
+            ),
         shape = CardDefaults.outlinedShape
     )
     {
@@ -60,7 +65,7 @@ fun GunplogCard(
                     tint = MaterialTheme.colorScheme.primary,
                 )
             }
-            IconButton(onClick = addWishlistClicked) {
+            IconButton(onClick = addWishlistClicked){
                 Icon(
                     imageVector = if (kit.IsInWishlist) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                     contentDescription = stringResource(R.string.add_wishlist, kit.name),
@@ -79,7 +84,8 @@ fun GunplaCardPreview1() {
         GunplogCard(
             kit = kit,
             addCollectionClicked = {},
-            addWishlistClicked = {}
+            addWishlistClicked = {},
+            showInfoPage = {}
         )
     }
 }
@@ -94,7 +100,8 @@ fun GunplaCardPreview2() {
         GunplogCard(
             kit = kit,
             addCollectionClicked = {},
-            addWishlistClicked = {}
+            addWishlistClicked = {},
+            showInfoPage = {}
         )
     }
 }
@@ -107,8 +114,9 @@ fun GunplaCardPreview3() {
     GunplogsTheme {
         GunplogCard(
             kit = kit,
-            addCollectionClicked = {},
-            addWishlistClicked = {}
+            addCollectionClicked = { kit.IsInCollection = !kit.IsInCollection },
+            addWishlistClicked = { kit.IsInWishlist = !kit.IsInWishlist },
+            showInfoPage = {}
         )
     }
 }

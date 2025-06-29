@@ -30,7 +30,7 @@ interface KitDao {
     suspend fun deleteKits(vararg kits: Kit)
 
     @Query("SELECT * FROM kit WHERE uid = :uid")
-    fun loadKit(uid : Int) : Kit
+    fun loadKit(uid : Int?) : Kit
 
     @Query("SELECT * FROM kit WHERE IsInCollection = TRUE")
     fun loadCollection() : Flow<List<Kit>>

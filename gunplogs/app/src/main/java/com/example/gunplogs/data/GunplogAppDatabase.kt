@@ -23,6 +23,7 @@ abstract class GunplogAppDatabase : RoomDatabase() {
             return Instance ?: synchronized(this) {
                 Room.databaseBuilder(context, GunplogAppDatabase::class.java, "kit_database")
                     .addCallback(PrepopulateDatabaseCallback(context))
+                    .allowMainThreadQueries()
                     .build()
                     .also { Instance = it }
             }

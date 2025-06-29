@@ -4,7 +4,7 @@ import com.example.gunplogs.model.Kit
 import kotlinx.coroutines.flow.Flow
 
 interface KitsRepository {
-    fun getKitStream(id: Int): Kit
+    fun getKitStream(id: Int?): Kit
 
     fun getKitCollection() : Flow<List<Kit>>
 

@@ -4,7 +4,7 @@ import com.example.gunplogs.model.Kit
 import kotlinx.coroutines.flow.Flow
 
 class LocalKitsRepository(private val kitDao : KitDao) : KitsRepository {
-    override fun getKitStream(uid: Int): Kit = kitDao.loadKit(uid)
+    override fun getKitStream(uid: Int?): Kit = kitDao.loadKit(uid)
 
     override fun getKitCollection() : Flow<List<Kit>> = kitDao.loadCollection()
 

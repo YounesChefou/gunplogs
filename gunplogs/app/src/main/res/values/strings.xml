@@ -7,4 +7,6 @@
     <string name="wishlist">Wishlist</string>
     <string name="add_collection">Ajouter le kit à la collection</string>
     <string name="add_wishlist">Ajouter le kit %1$s à la wishlist</string>
+    <string name="placeholder">Image du kit</string>
+    <string name="return_to_main_screen">Retourner à l\'écran principal</string>
 </resources>

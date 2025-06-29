@@ -7,7 +7,7 @@ class OldGunplogDatabase {
 
     private val kits = listOf<Kit>(
         Kit(
-            uid = 1,
+            uid = 15,
             name = "RG 1/144 UNICORN GUNDAM 03 PHENEX (NARRATIVE Ver.)",
             series = "narrative",
             scale = "rg-c",
