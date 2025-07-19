@@ -26,7 +26,6 @@ data class GunplogsUiState(
     val kits : Flow<List<Kit>>,
     val searchValue : String,
     val category: Category = Category.ALL,
-    val uiChange : Boolean = false,
 )
 
 class GunplogViewModel(var context : Context) : ViewModel() {
@@ -85,20 +84,6 @@ class GunplogViewModel(var context : Context) : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.updateKit(kit)
 
-
-            println("Before map : Kit name : " + kit.name + "kit uid : " + kit.uid + " InCollection ? " + kit.IsInCollection)
-
-            _uiState.value = _uiState.value.copy(
-                kits =
-                    kitsInDatabase.map { listKits ->
-                        listKits.map { oldKit ->
-                            if (oldKit.uid == kit.uid)
-                                oldKit.copy(IsInCollection = kit.IsInCollection)
-                            else oldKit
-                        }
-                    },
-                uiChange = !currentChange
-            )
         }
     }
     // Adds the kit to the wishlist
@@ -108,13 +93,12 @@ class GunplogViewModel(var context : Context) : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.updateKit(kit)
         }
-        _uiState.value = _uiState.value.copy(
-            kits =
-                kitsInDatabase.map { listKits ->
-                    listKits.map { oldKit -> if (oldKit.uid == kit.uid) oldKit.copy(IsInWishlist = kit.IsInWishlist) else oldKit }
-                },
-            uiChange = !currentChange
-        )
+//        _uiState.value = _uiState.value.copy(
+//            kits =
+//                kitsInDatabase.map { listKits ->
+//                    listKits.map { oldKit -> if (oldKit.uid == kit.uid) oldKit.copy(IsInWishlist = kit.IsInWishlist) else oldKit }
+//                },
+//        )
     }
 
     fun loadKit(uid : Int?) : Kit {

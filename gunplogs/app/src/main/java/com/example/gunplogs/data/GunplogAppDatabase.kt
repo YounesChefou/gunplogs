@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.gunplogs.model.Kit
 
-@Database(entities = [Kit::class], version = 1, exportSchema = false)
+@Database(entities = [Kit::class], version = 2, exportSchema = false)
 abstract class GunplogAppDatabase : RoomDatabase() {
     abstract fun kitDao(): KitDao
     companion object {

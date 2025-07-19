@@ -31,21 +31,6 @@ fun GunplogsMainScreen(
 
     println("Gunplogs Screen")
 
-//    Scaffold(
-//        modifier = Modifier
-//            .fillMaxSize(),
-//        topBar = {
-//            TopAppBar(
-//                title = {
-//                    Text(
-//                        text = stringResource(R.string.app_name),
-//                        style = MaterialTheme.typography.headlineLarge, // TODO() : faire le theme principal
-//                        color = Color(0xFF22054D),
-//                    )
-//                }
-//            )
-//        }
-//    ) { innerPadding ->
         LazyColumn (
 //            modifier = Modifier
 //                .padding(innerPadding),
