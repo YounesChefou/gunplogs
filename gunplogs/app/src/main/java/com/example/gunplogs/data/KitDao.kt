@@ -33,11 +33,11 @@ interface KitDao {
     fun loadKit(uid : Int?) : Kit
 
     @Query("SELECT * FROM kit WHERE IsInCollection = TRUE")
-    fun loadCollection() : Flow<List<Kit>>
+    fun loadCollection() : List<Kit>
 
     @Query("SELECT * FROM kit WHERE IsInWishlist = TRUE")
-    fun loadWishlist() : Flow<List<Kit>>
+    fun loadWishlist() : List<Kit>
 
     @Query("SELECT * FROM kit ORDER BY name ASC")
-    fun loadAll() : Flow<List<Kit>>
+    fun loadAll() : List<Kit>
 }

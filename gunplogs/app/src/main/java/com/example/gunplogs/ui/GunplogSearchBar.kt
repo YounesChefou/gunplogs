@@ -8,7 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -21,14 +21,16 @@ import com.example.gunplogs.ui.theme.GunplogsTheme
 
 @Composable
 fun GunplogSearchBar(
-    searchValue : String,
     onSearchChange : (String) -> Unit,
 ) {
-    var text by remember { mutableStateOf("") }
+    var searchValue by rememberSaveable { mutableStateOf("") }
 
     OutlinedTextField (
         value = searchValue,
-        onValueChange = onSearchChange,
+        onValueChange = {
+            searchValue = it
+            onSearchChange(it)
+        },
         modifier = Modifier
             .fillMaxWidth()
             .padding(4.dp),
@@ -43,7 +45,6 @@ fun GunplogSearchBar(
 fun GunplogSearchBarPreview() {
     GunplogsTheme {
         GunplogSearchBar(
-            searchValue = "",
             onSearchChange = {}
         )
     }

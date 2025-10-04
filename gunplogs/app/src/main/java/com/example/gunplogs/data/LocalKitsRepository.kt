@@ -6,11 +6,11 @@ import kotlinx.coroutines.flow.Flow
 class LocalKitsRepository(private val kitDao : KitDao) : KitsRepository {
     override fun getKitStream(uid: Int?): Kit = kitDao.loadKit(uid)
 
-    override fun getKitCollection() : Flow<List<Kit>> = kitDao.loadCollection()
+    override fun getKitCollection() : List<Kit> = kitDao.loadCollection()
 
-    override fun getKitWishlist() : Flow<List<Kit>> = kitDao.loadWishlist()
+    override fun getKitWishlist() : List<Kit> = kitDao.loadWishlist()
 
-    override fun getAllKitsStream(): Flow<List<Kit>> = kitDao.loadAll()
+    override fun getAllKitsStream(): List<Kit> = kitDao.loadAll()
 
     override suspend fun insertKit(kit: Kit) = kitDao.insertKit(kit)
 

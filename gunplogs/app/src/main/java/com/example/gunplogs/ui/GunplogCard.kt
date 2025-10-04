@@ -39,8 +39,8 @@ fun GunplogCard(
     addWishlistClicked : (Kit) -> Unit,
     showInfoPage : (Int) -> Unit
 ){
-    var inCollection by rememberSaveable { mutableStateOf(kit.IsInCollection) }
-    var inWishlist by rememberSaveable { mutableStateOf(kit.IsInWishlist) }
+    var inCollection by remember { mutableStateOf(kit.IsInCollection) }
+    var inWishlist by remember { mutableStateOf(kit.IsInWishlist) }
 
     ElevatedCard (
         elevation = CardDefaults.cardElevation(
@@ -77,8 +77,8 @@ fun GunplogCard(
                 )
             }
             IconButton(onClick = {
-                inWishlist = !inWishlist
                 addWishlistClicked(kit)
+                inWishlist = !inWishlist
             }){
                 Icon(
                     imageVector = if (inWishlist) Icons.Default.Favorite else Icons.Default.FavoriteBorder,

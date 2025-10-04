@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.gunplogs.ui.theme.GunplogsTheme
+import com.example.gunplogs.viewmodels.GunplogViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -25,8 +26,7 @@ fun GunplogsMainScreen(
     showInfoPage : (Int) -> Unit
 ) {
     val uiState = viewModel.uiState.collectAsStateWithLifecycle()
-    val flowKits = uiState.value.kits
-    val listKits = flowKits.collectAsState(initial = emptyList()).value
+    val listKits = uiState.value.kits
     val category = uiState.value.category
 
     println("Gunplogs Screen")
@@ -38,7 +38,6 @@ fun GunplogsMainScreen(
         ){
             item {
                 GunplogSearchBar(
-                    searchValue = uiState.value.searchValue,
                     onSearchChange = { viewModel.onSearchValueChanged(it)}
                 )
             }

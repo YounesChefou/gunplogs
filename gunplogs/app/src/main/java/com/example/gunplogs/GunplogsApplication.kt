@@ -19,7 +19,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.gunplogs.ui.GunplogInfoPage
-import com.example.gunplogs.ui.GunplogViewModel
+import com.example.gunplogs.viewmodels.GunplogViewModel
 import com.example.gunplogs.ui.GunplogsMainScreen
 
 enum class GunplogsScreenType {
@@ -48,7 +48,6 @@ fun GunplogsApp(
             )
         }
     ) { innerPadding ->
-
         var navController = rememberNavController()
         NavHost(
             navController = navController,
