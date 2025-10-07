@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -88,6 +89,9 @@ class GunplogViewModel(var repository: KitsRepository) : ViewModel() {
 
         viewModelScope.launch {
             repository.updateKit(newKit)
+            _uiState.update { state ->
+                state.copy(kits = getKitListBasedOnCategory(uiState.value.category))
+            }
         }
     }
 

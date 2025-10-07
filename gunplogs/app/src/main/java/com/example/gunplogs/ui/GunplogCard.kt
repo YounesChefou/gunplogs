@@ -39,8 +39,6 @@ fun GunplogCard(
     addWishlistClicked : (Kit) -> Unit,
     showInfoPage : (Int) -> Unit
 ){
-    var inCollection by remember { mutableStateOf(kit.IsInCollection) }
-    var inWishlist by remember { mutableStateOf(kit.IsInWishlist) }
 
     ElevatedCard (
         elevation = CardDefaults.cardElevation(
@@ -68,20 +66,18 @@ fun GunplogCard(
         ){
             IconButton(onClick = {
                 addCollectionClicked(kit)
-                inCollection = kit.IsInCollection
             }) {
                 Icon(
-                    imageVector = if (inCollection) Icons.Default.CheckCircle else Icons.Default.AddCircle,
+                    imageVector = if (kit.IsInCollection) Icons.Default.CheckCircle else Icons.Default.AddCircle,
                     contentDescription = stringResource(R.string.add_collection),
                     tint = MaterialTheme.colorScheme.primary,
                 )
             }
             IconButton(onClick = {
                 addWishlistClicked(kit)
-                inWishlist = !inWishlist
             }){
                 Icon(
-                    imageVector = if (inWishlist) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                    imageVector = if (kit.IsInWishlist) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                     contentDescription = stringResource(R.string.add_wishlist, kit.name),
                     tint = MaterialTheme.colorScheme.primary,
                 )
@@ -108,8 +104,7 @@ fun GunplaCardPreview1() {
 @Composable
 fun GunplaCardPreview2() {
     var kit = OldGunplogDatabase().getKit(0)
-    kit.IsInCollection = true
-    kit.IsInWishlist = true
+    kit = kit.copy(IsInCollection = true, IsInWishlist = true)
     GunplogsTheme {
         GunplogCard(
             kit = kit,
@@ -124,12 +119,12 @@ fun GunplaCardPreview2() {
 @Composable
 fun GunplaCardPreview3() {
     var kit = OldGunplogDatabase().getKit(0)
-    kit.IsInWishlist = true
+    kit = kit.copy(IsInWishlist = true)
     GunplogsTheme {
         GunplogCard(
             kit = kit,
-            addCollectionClicked = { kit.IsInCollection = !kit.IsInCollection },
-            addWishlistClicked = { kit.IsInWishlist = !kit.IsInWishlist },
+            addCollectionClicked = { kit = kit.copy(IsInCollection = !kit.IsInCollection) },
+            addWishlistClicked = { kit = kit.copy(IsInWishlist = !kit.IsInWishlist) },
             showInfoPage = {}
         )
     }

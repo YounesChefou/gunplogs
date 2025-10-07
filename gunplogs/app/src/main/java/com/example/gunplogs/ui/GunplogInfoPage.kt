@@ -42,11 +42,6 @@ fun GunplogInfoPage(
     //viewModel: GunplogViewModel = viewModel()
 )
 {
-//    val uiState = viewModel.uiState.collectAsStateWithLifecycle()
-//    val flowKits = uiState.value.kits
-//    va listKits = flowKits.collectAsState(initial = emptyList()).value
-//    var kit = listKits.first { it.uid == kitUid }
-
     Column(
         modifier = Modifier
             .background(color = MaterialTheme.colorScheme.background)

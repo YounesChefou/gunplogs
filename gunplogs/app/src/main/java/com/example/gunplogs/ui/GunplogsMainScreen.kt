@@ -32,8 +32,6 @@ fun GunplogsMainScreen(
     println("Gunplogs Screen")
 
         LazyColumn (
-//            modifier = Modifier
-//                .padding(innerPadding),
             verticalArrangement = Arrangement.spacedBy(4.dp),
         ){
             item {
