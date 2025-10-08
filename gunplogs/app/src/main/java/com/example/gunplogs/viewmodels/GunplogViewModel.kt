@@ -1,18 +1,19 @@
 package com.example.gunplogs.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.gunplogs.data.KitsRepository
 import com.example.gunplogs.model.Category
 import com.example.gunplogs.model.Kit
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.seconds
 
 data class GunplogsUiState(
     val kits : List<Kit> = listOf<Kit>(),
@@ -21,55 +22,68 @@ data class GunplogsUiState(
 
 class GunplogViewModel(var repository: KitsRepository) : ViewModel() {
 
-    private val _uiState : MutableStateFlow<GunplogsUiState> =
-        MutableStateFlow(
+    private val currentCategory = MutableStateFlow(Category.ALL)
+    private val search = MutableStateFlow<String>("")
+
+    val uiState: StateFlow<GunplogsUiState> =
+        combine(
+            repository.getAllKitsStream(),
+            currentCategory,
+            search,
+        ) { kits, category, search ->
             GunplogsUiState(
-                kits = repository.getAllKitsStream(),
-                category = Category.ALL,
+                kits = kits.filter { isKitInCurrentCategory(it) && isKitInCurrentSearch(it) },
+                category = currentCategory.value
             )
-        )
-
-    val uiState : StateFlow<GunplogsUiState> = _uiState.asStateFlow()
-
-    fun getKitListBasedOnCategory(category: Category) : List<Kit> {
-        var kits : List<Kit>
-
-        when(category) {
-            Category.ALL -> kits = repository.getAllKitsStream()
-            Category.COLLECTION -> kits = repository.getKitCollection()
-            Category.WISHLIST -> kits = repository.getKitWishlist()
         }
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5000),
+                initialValue = GunplogsUiState(
+                    kits = emptyList(),
+                    category = Category.ALL,
+                ),
+            )
 
-        return kits
+    /**
+     * Returns true if kit belongs to currentCategory defined in UiState
+     */
+    fun isKitInCurrentCategory(kit : Kit) : Boolean {
+
+        when(currentCategory.value) {
+            Category.ALL -> return true
+            Category.COLLECTION -> return (kit.IsInCollection)
+            Category.WISHLIST -> return (kit.IsInWishlist)
+        }
+        return false
     }
-    // Updates the kits displayed to the user based on the
-    // newSearchValue entered.
+
+    /**
+     * Returns true if the search entry corresponds to the name, series or manufacturer of the kit.
+     */
+    fun isKitInCurrentSearch(kit : Kit) : Boolean {
+        if (search.value.isEmpty())
+            return true
+        else
+            return  kit.name.contains(search.value, ignoreCase = true) ||
+                    kit.series.contains(search.value, ignoreCase = true) ||
+                    kit.manufacturer.contains(search.value, ignoreCase = true)
+
+        return false
+    }
+
+    /**
+     *  Updates the kits displayed to the user based on the newSearchValue entered.
+     **/
     fun onSearchValueChanged(newSearchValue : String) {
-
-        _uiState.update { state ->
-            state.copy(
-                kits = getKitListBasedOnCategory(uiState.value.category).filter
-                { kit ->
-                    (kit.name.contains(newSearchValue, ignoreCase = true)) ||
-                    (kit.series.contains(newSearchValue, ignoreCase = true)) ||
-                    (kit.manufacturer.contains(newSearchValue, ignoreCase = true))
-                },
-            )
-        }
+        search.value = newSearchValue.trim()
     }
 
-    // Changes category based on what the user selected
+    /**
+     *  Changes category based on what the user selected
+     **/
     fun changeCategory(newCategory: Category) {
-        var newKits : List<Kit> = getKitListBasedOnCategory(newCategory)
-
-        viewModelScope.launch {
-            _uiState.update { state ->
-                state.copy(
-                    kits = newKits,
-                    category = newCategory
-                )
-            }
-        }
+        currentCategory.value = newCategory
     }
 
     // Adds the kit to the collection
@@ -78,9 +92,6 @@ class GunplogViewModel(var repository: KitsRepository) : ViewModel() {
 
         viewModelScope.launch {
             repository.updateKit(newKit)
-            _uiState.update { state ->
-                state.copy(kits = getKitListBasedOnCategory(uiState.value.category))
-            }
         }
     }
     // Adds the kit to the wishlist
@@ -89,9 +100,6 @@ class GunplogViewModel(var repository: KitsRepository) : ViewModel() {
 
         viewModelScope.launch {
             repository.updateKit(newKit)
-            _uiState.update { state ->
-                state.copy(kits = getKitListBasedOnCategory(uiState.value.category))
-            }
         }
     }
 

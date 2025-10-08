@@ -39,5 +39,5 @@ interface KitDao {
     fun loadWishlist() : List<Kit>
 
     @Query("SELECT * FROM kit ORDER BY name ASC")
-    fun loadAll() : List<Kit>
+    fun loadAll() : Flow<List<Kit>>
 }

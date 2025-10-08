@@ -10,7 +10,7 @@ class LocalKitsRepository(private val kitDao : KitDao) : KitsRepository {
 
     override fun getKitWishlist() : List<Kit> = kitDao.loadWishlist()
 
-    override fun getAllKitsStream(): List<Kit> = kitDao.loadAll()
+    override fun getAllKitsStream(): Flow<List<Kit>> = kitDao.loadAll()
 
     override suspend fun insertKit(kit: Kit) = kitDao.insertKit(kit)
 

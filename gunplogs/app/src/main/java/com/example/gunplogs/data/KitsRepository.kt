@@ -22,7 +22,7 @@ interface KitsRepository {
     /**
      * Retrieves all kits available in database
      */
-    fun getAllKitsStream(): List<Kit>
+    fun getAllKitsStream(): Flow<List<Kit>>
 
     /**
      * Inserts new Kit in database.
