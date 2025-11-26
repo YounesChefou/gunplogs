@@ -99,11 +99,4 @@ class OldGunplogDatabase {
         }
     }
 
-    fun printKit(kit: Kit) : String {
-        return buildString {
-            append("Name : ${kit.name}\n")
-            append("Series : ${kit.series}\n")
-            append("Scale : ${kit.scale}\n")
-        }
-    }
 }

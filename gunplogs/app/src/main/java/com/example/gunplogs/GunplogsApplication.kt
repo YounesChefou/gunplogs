@@ -1,6 +1,7 @@
 package com.example.gunplogs
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -35,7 +36,7 @@ fun GunplogsApp(
     val uiState = viewModel.uiState.collectAsStateWithLifecycle()
     Scaffold(
         modifier = Modifier
-            .fillMaxSize(),
+            .fillMaxWidth(),
         topBar = {
             TopAppBar(
                 title = {
@@ -48,6 +49,8 @@ fun GunplogsApp(
             )
         }
     ) { innerPadding ->
+
+
         var navController = rememberNavController()
         NavHost(
             navController = navController,
