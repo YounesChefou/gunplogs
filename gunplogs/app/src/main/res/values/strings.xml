@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">gunplogs</string>
+    <string name="app_name">Gunplogs.</string>
     <string name="rechercher_kit">Rechercher un kit</string>
     <string name="label_recherche">Entrer le nom d\'un kit</string>
     <string name="all_kits">Tous les kits</string>
@@ -9,4 +9,5 @@
     <string name="add_wishlist">Ajouter le kit %1$s à la wishlist</string>
     <string name="placeholder">Image du kit</string>
     <string name="return_to_main_screen">Retourner à l\'écran principal</string>
+    <string name="go_to_top_of_list">Go to top of list</string>
 </resources>

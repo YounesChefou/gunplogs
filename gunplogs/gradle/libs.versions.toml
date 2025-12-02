@@ -20,6 +20,7 @@ cameraVideo = "1.5.0-beta01"
 cameraView = "1.5.0-beta01"
 cameraExtensions = "1.5.0-beta01"
 uiTextGoogleFonts = "1.10.0-rc01"
+designBottomappbar = "28.0.0-alpha1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -48,6 +49,7 @@ androidx-camera-video = { group = "androidx.camera", name = "camera-video", vers
 androidx-camera-view = { group = "androidx.camera", name = "camera-view", version.ref = "cameraView" }
 androidx-camera-extensions = { group = "androidx.camera", name = "camera-extensions", version.ref = "cameraExtensions" }
 androidx-ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version.ref = "uiTextGoogleFonts" }
+design-bottomappbar = { group = "com.android.support", name = "design-bottomappbar", version.ref = "designBottomappbar" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

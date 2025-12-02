@@ -1,21 +1,15 @@
 package com.example.gunplogs.ui
 
-import android.media.Image
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
@@ -29,14 +23,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clipToBounds
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
-import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -53,8 +42,7 @@ import com.example.gunplogs.data.OldGunplogDatabase
 import com.example.gunplogs.model.Kit
 import com.example.gunplogs.ui.theme.GunplogsTheme
 import androidx.compose.ui.text.googlefonts.GoogleFont
-import androidx.compose.ui.text.googlefonts.Font
-import androidx.compose.ui.unit.TextUnit
+import  com.example.gunplogs.ui.shapes.kitBox
 
 val provider = GoogleFont.Provider(
     providerAuthority = "com.google.android.gms.fonts",
@@ -81,15 +69,23 @@ fun GunplogCard(
     Box (
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(
-                onClick = { showInfoPage(kit.uid) }
-            )
-            .height(200.dp)
-            .width(500.dp)
-            .background(Color(0x2D0091FF))
-            .border(width = 2.dp, color = Color(0xA8008DFC))
-            .shadow(elevation = 2.dp, ambientColor = Color(0xA8008DFC))
+            .height(180.dp)
+            .clip(kitBox())
+            .background(Color.Transparent)
+            .border(width = 3.dp, color = Color(0x850091FF), shape = kitBox())
     ) {
+        Box (
+            modifier = Modifier
+                .fillMaxWidth(fraction = 0.95f)
+//            .clickable(
+//                onClick = { showInfoPage(kit.uid) }
+//            )
+                .fillMaxHeight(fraction = 0.9f)
+//            .shadow(elevation = 2.dp, ambientColor = Color(0xA8008DFC))
+                .clip(kitBox())
+                .background(Color(0x2D0091FF))
+                .align(Alignment.Center)
+        ) {
 //        Image(
 //            painter = painterResource(R.drawable.turn_a),
 //            contentDescription = "TURN A TURN",
@@ -106,65 +102,72 @@ fun GunplogCard(
 //                drawRect(brush)
 //            }
 //        )
-        Row (
-            modifier = Modifier
-                .align(Alignment.Center)
-        ){
-            Text(
-                text = printKit(kit),
+            Row (
                 modifier = Modifier
-                    .padding(8.dp),
-                color = Color.White,
-                textAlign = TextAlign.Center,
-                style = TextStyle(
-                    fontFamily = fontFamily,
-                    fontWeight = FontWeight.Normal,
-                    fontSize = 16.sp,
-                    shadow = Shadow(
-                        color = Color(0xFAFF3000), blurRadius = 10f
+                    .align(Alignment.Center)
+            ){
+                Text(
+                    text = printKit(kit),
+                    modifier = Modifier
+                        .padding(8.dp),
+                    color = Color.White,
+                    textAlign = TextAlign.Center,
+                    style = TextStyle(
+                        fontFamily = fontFamily,
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 16.sp,
+                        shadow = Shadow(
+                            color = Color(0xFAFF3000), blurRadius = 10f
+                        )
                     )
                 )
-            )
-        }
-        Row (
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.BottomCenter)
-        ){
-            gradeImage(kit.scale)
+            }
             Row (
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter)
             ){
-                IconButton(onClick = {
-                    addCollectionClicked(kit)
-                }) {
-                    Icon(
-                        imageVector = if (kit.IsInCollection) Icons.Default.CheckCircle else Icons.Default.AddCircle,
-                        contentDescription = stringResource(R.string.add_collection),
-                        tint = MaterialTheme.colorScheme.primary,
-                    )
-                }
-                IconButton(onClick = {
-                    addWishlistClicked(kit)
-                }){
-                    Icon(
-                        imageVector = if (kit.IsInWishlist) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-                        contentDescription = stringResource(R.string.add_wishlist, kit.name),
-                        tint = MaterialTheme.colorScheme.primary,
-                    )
+                gradeImage(kit.scale)
+                Row (
+                    modifier = Modifier
+                        .padding(horizontal = 20.dp)
+                ){
+                    IconButton(onClick = {
+                        addCollectionClicked(kit)
+                    }) {
+                        Icon(
+                            imageVector = if (kit.IsInCollection) Icons.Default.CheckCircle else Icons.Default.AddCircle,
+                            contentDescription = stringResource(R.string.add_collection),
+                            tint = MaterialTheme.colorScheme.primary,
+                        )
+                    }
+                    IconButton(onClick = {
+                        addWishlistClicked(kit)
+                    }){
+                        Icon(
+                            imageVector = if (kit.IsInWishlist) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                            contentDescription = stringResource(R.string.add_wishlist, kit.name),
+                            tint = MaterialTheme.colorScheme.primary,
+                        )
+                    }
                 }
             }
         }
-//        Image(
-//            painter = painterResource(R.drawable.scanlines),
-//            contentDescription = "scanline",
-//            modifier = Modifier
-//                .fillMaxHeight()
-//                .fillMaxWidth()
-//                .clipToBounds()
-//        )
     }
 }
+
+//fun outerBox(): GenericShape =
+//    GenericShape { size, _ ->
+//        moveTo(100f, 0f)
+//        lineTo(size.width, 0f)
+//        lineTo(size.width, size.height - 100f)
+//        lineTo(size.width - 100f, size.height)
+//        lineTo(0f, size.height)
+//        lineTo(0f, 100f)
+//        lineTo(100f, 0f)
+//        close()
+//}
 
 fun printKit(kit: Kit) : String {
     return buildString {
@@ -190,9 +193,9 @@ fun gradeImage(scale : String) : Unit {
             else -> "HIGH GRADE"
         },
         modifier = Modifier
-            .height(50.dp)
-            .width(84.dp)
-            .padding(5.dp)
+            .height(40.dp)
+            .width(74.dp)
+            .padding(horizontal = 10.dp)
     )
 }
 
